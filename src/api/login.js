@@ -15,7 +15,7 @@ export const getSmsCaptcha = (mobile,
     }
   })
 }
-export const login = (mobile, smsCode) => {
+export const Login = (mobile, smsCode) => {
   return request.post('/passport/login',
     {
       form: {

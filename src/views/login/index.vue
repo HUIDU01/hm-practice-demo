@@ -17,18 +17,18 @@
         <div class="form-item">
           <input v-model="smsCode" class="inp" placeholder="请输入短信验证码">
           <button @click="getCode">
-            {{  baseSecound === second ?"获取验证码" :`${second}后重新获取验证码`}}
+            {{ baseSecound === second ? "获取验证码" : `${second}后重新获取验证码` }}
           </button>
         </div>
       </div>
-      <button class="login-btn">登录</button>
+      <button @click="login()" class="login-btn">登录</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Toast } from 'vant'
-import { getPicCode, getSmsCaptcha, login } from '@/api/login'
+import { getPicCode, getSmsCaptcha, Login } from '@/api/login'
 
 export default {
   name: 'loginIndex',
@@ -72,6 +72,7 @@ export default {
       }
       if (!this.timer) {
         const res = await getSmsCaptcha(this.mobile, this.picKey, this.picCode)
+        console.log(res)
         if (res.statue === 200) {
           this.$toast('发送验证码成功')
         }
@@ -85,24 +86,43 @@ export default {
         }, 1000)
       }
     },
+    // async login () {
+    //   if (!this.validFn()) {
+    //     this.$toast('获取信息失败')
+    //     return
+    //   }
+    //   if (!/^\d{6}$/.test(this.smsCode)) {
+    //     this.$toast('请输入正确的验证码')
+    //     return
+    //   }
+    //   // 登录（手机号，验证码）
+    //   const res = await Login(this.mobile, this.smsCode)
+    //   console.log(res)
+    //   if (res.data === 200) {
+    //     this.$router.push('/')
+    //     this.$toast.success('登录成功')
+    //   }
+    // }
+
     async login () {
       if (!this.validFn()) {
         return
       }
-      if (!/^\w{6}$/.test(this.smsCode)) {
+      if (!/^\d{6}$/.test(this.smsCode)) {
+        this.$toast('请输入正确的手机验证码')
         return
       }
-      const res = await login(this.mobile, this.smsCode)
-      if (res.data === 200) {
-        this.$router.push('/')
-        this.$toast('登录成功')
-      }
-    },
-
-    async created () { // 时间钩子
-      this.getPicCode()
+      const res = await Login(this.mobile, this.smsCode)
+      console.log(res)
+      this.$router.push('/')
+      this.$toast('登录成功')
+      this.$store.commit('user/setUserInfo', res.data)
     }
+  },
+  async created () { // 时间钩子
+    await this.getPicCode()
   }
+
 }
 </script>
 
@@ -164,10 +184,10 @@ export default {
     width: 100%;
     height: 42px;
     margin-top: 39px;
-    background: linear-gradient(90deg,#ecb53c,#ff9211);
+    background: linear-gradient(90deg, #ecb53c, #ff9211);
     color: #fff;
     border-radius: 39px;
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,.1);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .1);
     letter-spacing: 2px;
     display: flex;
     justify-content: center;
