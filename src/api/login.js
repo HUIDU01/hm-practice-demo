@@ -1,5 +1,28 @@
-import requestpng from '@/utils/request'
+import request from '@/utils/request'
 
 export const getPicCode = () => {
-  return requestpng.get('/captcha/image')
+  return request.get('/captcha/image')
+}
+
+export const getSmsCaptcha = (mobile,
+  captchaKey,
+  captchaCode) => {
+  return request.post('/captcha/sendSmsCaptcha', {
+    form: {
+      mobile,
+      captchaKey,
+      captchaCode
+    }
+  })
+}
+export const login = (mobile, smsCode) => {
+  return request.post('/passport/login',
+    {
+      form: {
+        smsCode,
+        mobile,
+        isParty: false,
+        partyData: {}
+      }
+    })
 }
