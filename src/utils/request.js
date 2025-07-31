@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Toast } from 'vant'
 
 const request = axios.create({
   baseURL: 'http://smart-shop.itheima.net/index.php?s=/api/',
@@ -6,6 +7,12 @@ const request = axios.create({
 })
 // 添加请求拦截器
 request.interceptors.request.use(function (config) {
+  Toast.loading({
+    message: '加载中...',
+    icon: 'https://s1.hdslb.com/bfs/seed/jinkela/short/message/img/gochat.png',
+    forbidClick: true,
+    duration: 0
+  })
   // 在发送请求之前做些什么
   return config
 }, function (error) {
@@ -15,7 +22,14 @@ request.interceptors.request.use(function (config) {
 // 添加响应拦截器
 request.interceptors.response.use(function (response) {
   // 2xx 范围内的状态码都会触发该函数。
+  const res = response.data
   // 对响应数据做点什么
+  if (res.status !== 200) {
+    Toast(res.message)
+    return Promise.reject(res.message)
+  } else {
+    Toast.clear()
+  }
   return response.data
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。

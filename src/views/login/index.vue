@@ -29,7 +29,6 @@
 <script>
 import { Toast } from 'vant'
 import { getPicCode, getSmsCaptcha, Login } from '@/api/login'
-
 export default {
   name: 'loginIndex',
   data () { // 数据
@@ -73,11 +72,12 @@ export default {
       if (!this.timer) {
         const res = await getSmsCaptcha(this.mobile, this.picKey, this.picCode)
         console.log(res)
-        if (res.statue === 200) {
+        if (res.status === 200) {
           this.$toast('发送验证码成功')
         }
         this.timer = setInterval(() => {
           this.second--
+          console.log(this.second)
           if (this.second <= 1) {
             clearInterval(this.timer)// 销毁计时器
             this.timer = null
@@ -121,6 +121,9 @@ export default {
   },
   async created () { // 时间钩子
     await this.getPicCode()
+  },
+  destroyed () {
+    clearInterval(this.timer)
   }
 
 }
