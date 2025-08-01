@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item" @click="$router.push('/prodetail')">
+  <div class="goods-item" @click="$router.push(`/prodetail/${item.goods_id}`)">
     <div class="left">
       <img :src="item.goods_image" alt="" />
     </div>
@@ -25,6 +25,9 @@ export default {
         return {}
       }
     }
+  },
+  created () {
+    // console.log(this.item)
   }
 }
 </script>

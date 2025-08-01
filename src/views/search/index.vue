@@ -40,12 +40,12 @@ export default {
       if (indexKey === -1) {
         this.history.unshift(key)
         setSearchHistory(this.history)
-        this.$router.push(`search/?id=${key}`)
+        this.$router.push(`searchList/?search=${key}`)
       } else {
         this.history.splice(indexKey, 1)
         this.history.unshift(key)
         setSearchHistory(this.history)
-        this.$router.push(`search/?id=${key}`)
+        this.$router.push(`searchList/?search=${key}`)
       }
     },
     clearHistory () {

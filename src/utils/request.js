@@ -9,7 +9,7 @@ const request = axios.create({
 request.interceptors.request.use(function (config) {
   Toast.loading({
     message: '加载中...',
-    icon: 'https://s1.hdslb.com/bfs/seed/jinkela/short/message/img/gochat.png',
+    icon: 'arrow-left',
     forbidClick: true,
     duration: 0
   })

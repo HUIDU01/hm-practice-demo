@@ -25,7 +25,7 @@
         v-for="item in navBar" :key="item.imgUrl"
         :icon="item.imgUrl"
         :text="item.text"
-        @click="$router.push('/category')"
+        @click="$router.push('/classify')"
       />
     </van-grid>
 

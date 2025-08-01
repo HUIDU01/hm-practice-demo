@@ -45,11 +45,12 @@ export default {
   },
 
   methods: {
-    async getPicCode () {
+    async getPicCode () { // 获取图形验证码
       const { data: { base64, key } } = await getPicCode()
       this.picUrl = base64
       this.picKey = key
       this.$toast.success('成功显示图片')
+      console.log()
     },
     onClickLeft () {
       Toast('返回')

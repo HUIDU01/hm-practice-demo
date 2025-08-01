@@ -8,6 +8,8 @@ import Cart from '@/views/layout/cart.vue'
 import Search from '@/views/search'
 import Classify from '@/views/layout/classify.vue'
 import Home from '@/views/layout/home.vue'
+import SearchList from '@/views/search/searchList.vue'
+import Prodetail from '@/views/prodetail'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -17,6 +19,8 @@ const routes = [
   { path: '/search', component: Search },
   { path: '/', redirect: '/layout' },
   { path: '/pay', component: Pay },
+  { path: '/searchList', component: SearchList },
+  { path: '/prodetail/:id', component: Prodetail },
   {
     path: '/layout',
     redirect: '/home',
