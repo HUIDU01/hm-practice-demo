@@ -115,7 +115,12 @@ export default {
       }
       const res = await Login(this.mobile, this.smsCode)
       console.log(res)
-      this.$router.push('/')
+      if (!this.$route.query.backUrl) {
+        this.$router.replace('/')
+      } else {
+        this.$router.replace(this.$route.query.backUrl)
+      }
+
       this.$toast('登录成功')
       this.$store.commit('user/setUserInfo', res.data)
     }
